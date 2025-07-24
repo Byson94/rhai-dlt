@@ -20,8 +20,8 @@ pub enum WidgetNode {
     EventBox { props: Map, children: Vec<WidgetNode> },
 
     // Top-level macros
-    DefWidget(Box<WidgetNode>),
-    DefWindow { name: String, props: Map, children: Vec<WidgetNode> },
+    DefWidget {  name: String, node: Box<WidgetNode> },
+    DefWindow { name: String, props: Map, widget: String },
     Poll { var: String, interval: String, cmd: String, initial: String },
     Listen { var: String, signal: String },
     Enter(Vec<WidgetNode>),

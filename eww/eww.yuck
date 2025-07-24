@@ -1,0 +1,19 @@
+(defpoll cpu_usage :interval "1s" :initial "initial" "./test.sh")
+(deflisten net_speed :initial "" "./test.sh")
+(defwidget win_body []
+  (centerbox :orientation "h"
+    (box :class "widget1" :halign "start" :orientation "h" :space_evenly false :spacing 5
+      (button :onclick "print('Hello there!')"
+        (label "greet")
+      )
+      (box :background_color "#888" :class "separator" :height "20px" :margin "0 8px" :width "1px")
+      (button :onclick "print('Bye bye!')"
+        (label "say bye")
+      )
+    )
+    (box)
+    (box)
+  )
+)
+(defwindow main_window :geometry (geometry :height 30 :width 1920 :x 0 :y 0) :monitor 0 :reserve (struts :distance 30 :top 30) :windowtype "dock" (win_body)
+)

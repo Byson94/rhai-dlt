@@ -103,15 +103,18 @@ pub fn register_all_widgets(engine: &mut Engine) {
 
     // --- Top-level macros ---
 
-    engine.register_fn("defwidget", |node: WidgetNode| {
-        WidgetNode::DefWidget(Box::new(node))
+    engine.register_fn("defwidget", |name: &str, node: WidgetNode| {
+        WidgetNode::DefWidget { 
+            name: name.to_string(),
+            node: Box::new(node),
+        } 
     });
 
-    engine.register_fn("defwindow", |name: &str, props: Map, children: Array| {
+    engine.register_fn("defwindow", |name: &str, props: Map, widget: String| {
         WidgetNode::DefWindow {
             name: name.to_string(),
             props,
-            children: children.into_iter().map(|v| v.cast()).collect(),
+            widget: widget.to_string(),
         }
     });
 
