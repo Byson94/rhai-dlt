@@ -103,34 +103,36 @@ pub fn register_all_widgets(engine: &mut Engine) {
 
     // --- Top-level macros ---
 
-    engine.register_fn("defwidget", |name: &str, node: WidgetNode| {
-        WidgetNode::DefWidget { 
-            name: name.to_string(),
-            node: Box::new(node),
-        } 
-    });
+    /*  defwidget is not needed in rhai because it is an imprative language.
+        Because of this, functions are basically defwidget itself!
+        There is no requirement to build a function just to match yucks syntax.
+    */
+    // engine.register_fn("defwidget", |name: &str, node: WidgetNode| {
+    //     WidgetNode::DefWidget { 
+    //         name: name.to_string(),
+    //         node: Box::new(node),
+    //     } 
+    // });
 
-    engine.register_fn("defwindow", |name: &str, props: Map, widget: String| {
+    engine.register_fn("defwindow", |name: &str, props: Map, node: WidgetNode| {
         WidgetNode::DefWindow {
             name: name.to_string(),
             props,
-            widget: widget.to_string(),
+            node: Box::new(node),
         }
     });
 
-    engine.register_fn("poll", |var: &str, interval: &str, cmd: &str, initial: &str| {
+    engine.register_fn("poll", |var: &str, props: Map| {
         WidgetNode::Poll {
             var: var.to_string(),
-            interval: interval.to_string(),
-            cmd: cmd.to_string(),
-            initial: initial.to_string(),
+            props: props,
         }
     });
 
-    engine.register_fn("listen", |var: &str, signal: &str| {
+    engine.register_fn("listen", |var: &str, props: Map| {
         WidgetNode::Listen {
             var: var.to_string(),
-            signal: signal.to_string(),
+            props,
         }
     });
 

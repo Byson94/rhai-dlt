@@ -31,15 +31,19 @@ fn window_body() {
 }
 
 enter([
-    poll("cpu_usage", "1s", "./test.sh", "initial"),
-    listen("net_speed", "./test.sh"),
-
-    defwidget("win_body", window_body()),
+    poll("cpu_usage", #{ 
+        interval: "1s", 
+        cmd: "./test.sh",  
+        initial: "initial" 
+    }),
+    listen("net_speed", #{ 
+        signal: "./test.sh"
+    }),
 
     defwindow("main_window", #{
         "monitor": 0,
         "windowtype": "dock",
         "geometry": #{ "x": 0, "y": 0, "width": 1920, "height": 30 },
         "reserve": #{ "top": 30, "distance": 30 }
-    }, "win_body")
-])
+    }, window_body())
+]);
